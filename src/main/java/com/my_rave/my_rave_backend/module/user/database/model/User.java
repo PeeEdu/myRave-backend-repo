@@ -42,6 +42,8 @@ public class User {
 
     private LocalDate createdAt = LocalDate.now();
 
+    private LocalDate updatedAt = LocalDate.now();
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             joinColumns = @JoinColumn(name = "user_id"),
