@@ -1,31 +1,51 @@
 package com.my_rave.my_rave_backend.module.user.database.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.*;
 
-@Entity(name = "users")
-@Table(name = "users")
+@Entity
+@Table(name = "usuarios",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email"),
+                @UniqueConstraint(columnNames = "cpf")
+        })
 @Data
-@Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String name;
-    private String login;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
+
+    @Column(nullable = false)
     private String password;
-    private char gender;
+
+    private Character gender;
+
     private LocalDate bornDate;
-    private Boolean emailConfirm;
-    private LocalDate updateAt;
-    private LocalDate createdAt;
+
+
+    private Boolean emailConfirm = false;
+
+    private LocalDate createdAt = LocalDate.now();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "interest_id")
+    )
+    private Set<UserInterest> interests = new HashSet<>();
 }
