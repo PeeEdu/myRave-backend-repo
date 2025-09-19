@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003
+      author: pedro
+      changes:
+        - createTable:
+            tableName: user_interest
+            columns:
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: interest_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+
+        - addPrimaryKey:
+            columnNames: user_id,interest_id
+            tableName: user_interest
+            constraintName: pk_user_interest
+
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: user_interest
+            constraintName: fk_user_interest_user
+            referencedColumnNames: id
+            referencedTableName: user
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseColumnNames: interest_id
+            baseTableName: user_interest
+            constraintName: fk_user_interest_interest
+            referencedColumnNames: id
+            referencedTableName: interests
+            onDelete: CASCADE

@@ -13,6 +13,8 @@ import java.util.*;
                 @UniqueConstraint(columnNames = "cpf")
         })
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class User {
 
@@ -43,6 +45,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
+            name = "usuarios_interesses",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "interest_id")
     )

@@ -25,6 +25,11 @@ public class UserDataBaseService implements IUserDatabaseService{
     }
 
     @Override
+    public User getUserByCPF(String cpf) {
+        return userRepository.findByCpf(cpf).orElse(null);
+    }
+
+    @Override
     public void saveUser(User user) {
         userRepository.save(user);
     }

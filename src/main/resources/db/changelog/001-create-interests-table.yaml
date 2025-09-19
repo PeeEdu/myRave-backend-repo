@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: pedro
+      changes:
+        - createTable:
+            tableName: interests
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: nome
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true

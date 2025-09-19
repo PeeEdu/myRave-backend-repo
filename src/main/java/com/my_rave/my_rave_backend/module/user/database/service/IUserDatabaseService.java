@@ -7,6 +7,8 @@ import java.util.UUID;
 public interface IUserDatabaseService {
     User getUserById(UUID id);
     User getUserByEmail(String email);
+    User getUserByCPF(String cpf);
     void saveUser(User user);
+
 
 }
