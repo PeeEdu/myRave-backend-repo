@@ -10,8 +10,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "interesses")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class UserInterest {
     @Id

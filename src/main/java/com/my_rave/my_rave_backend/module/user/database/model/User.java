@@ -13,8 +13,6 @@ import java.util.*;
                 @UniqueConstraint(columnNames = "cpf")
         })
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class User {
 
@@ -37,7 +35,6 @@ public class User {
 
     private LocalDate bornDate;
 
-
     private Boolean emailConfirm = false;
 
     private LocalDate createdAt = LocalDate.now();
@@ -50,4 +47,22 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "interest_id")
     )
     private Set<UserInterest> interests = new HashSet<>();
+
+    public void addInterest(UserInterest interest) {
+        if (this.interests == null) {
+            this.interests = new HashSet<>();
+        }
+        if (this.interests.size() >= 5) {
+            throw new IllegalArgumentException("Um usuário só pode ter até 5 interesses.");
+        }
+        this.interests.add(interest);
+        interest.getUsers().add(this);
+    }
+
+    public void removeInterest(UserInterest interest) {
+        if (this.interests != null && this.interests.contains(interest)) {
+            this.interests.remove(interest);
+            interest.getUsers().remove(this);
+        }
+    }
 }
